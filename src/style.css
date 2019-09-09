@@ -1,0 +1,21 @@
+.board{
+    border:2px solid #000;
+    position: relative;
+    margin:30px auto;
+}
+
+
+.snakePart{
+    background-color: #000;
+    box-sizing: border-box;
+    border:1px solid #fff;
+    position: absolute;
+    z-index: 10;
+}
+
+.apple{
+    background-color: #f00;
+    box-sizing: border-box;
+    border:1px solid #fff;
+    position: absolute;
+}
