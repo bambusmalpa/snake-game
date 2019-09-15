@@ -5,24 +5,28 @@ import Apple from "./components/Apple";
 const boradSize=500;
 const tailSize=5;
 
-
 const randomPosition=()=>{
   const x=Math.floor(Math.random()*boradSize/tailSize/tailSize)
   const y=Math.floor(Math.random()*boradSize/tailSize/tailSize)
+
   return [x,y]
 }
 
 
 
 
-
 class Game extends React.Component{
+  
+
   state={
     moveDirection:"E",
     speed:500,
+    applePosition:randomPosition(),
     snakeBody:[[5,10],[6,10],[7,10]],
-    applePosition:randomPosition()
+    
   }
+
+  
   
 
   componentDidMount=()=>{
@@ -35,6 +39,7 @@ class Game extends React.Component{
   componentDidUpdate=()=>{
     this.checkWallColission();
     this.checkAppleColission();
+    this.checkSelfCollision();
   }
   
   snakeMove=()=>{
@@ -83,7 +88,17 @@ class Game extends React.Component{
     
   }
   checkSelfCollision=()=>{
-    let snakeHead=this.state.snakeBody[this.state.snakeBody.length-1];
+    let head=this.state.snakeBody[this.state.snakeBody.length-1];
+    let body= [...this.state.snakeBody];
+    
+
+    for(let i=body.length-2;i>=0;i--){
+      if(body[i][0]===head[0]&&body[i][1]===head[1]){
+        this.gameOver()
+      }
+    }
+
+    
     
   }
   checkAppleColission=()=>{
@@ -115,27 +130,39 @@ class Game extends React.Component{
    
     switch (e.keyCode){
       case 38:
+        if(this.state.moveDirection==="S")
+        {return}
+        else{
         this.setState({
           moveDirection:"N"
-        });
+        });}
         break;
 
       case 40:
+        if(this.state.moveDirection==="N")
+        {return}
+        else{
         this.setState({
           moveDirection:"S"
-        });
+        });}
         break;
 
       case 37:
+        if(this.state.moveDirection==="E")
+        {return}
+        else{
         this.setState({
           moveDirection:"W"
-        });
+        });}
         break;
 
       case 39:
+        if(this.state.moveDirection==="W")
+        {return}
+        else{
         this.setState({
           moveDirection:"E"
-        });
+        });}
         break;
       default:
         return
@@ -144,7 +171,7 @@ class Game extends React.Component{
 
   gameOver=()=>{
     
-   alert("game over")
+   alert(`Game over, You have ${this.state.snakeBody.length} points!`)
    this.setState({
     moveDirection:"E",
     speed:1000,
