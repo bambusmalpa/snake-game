@@ -127,8 +127,17 @@ class Game extends React.Component{
  
 
   buttonPressed=(e)=>{
-   
-    switch (e.keyCode){
+   console.log(e)
+    this.cheangeDirection(e.keyCode)
+  }
+
+  virtualButtonPressed=(code)=>{
+    console.log(code)
+    this.cheangeDirection(code)
+  }
+
+  cheangeDirection=(direction)=>{
+    switch (direction){
       case 38:
         if(this.state.moveDirection==="S")
         {return}
@@ -174,7 +183,7 @@ class Game extends React.Component{
    alert(`Game over, You have ${this.state.snakeBody.length} points!`)
    this.setState({
     moveDirection:"E",
-    speed:1000,
+    speed:500,
     snakeBody:[[5,10],[6,10],[7,10]],
     applePosition:randomPosition()
   })
@@ -184,10 +193,22 @@ class Game extends React.Component{
   render(){
     
   return (
+    <div className="scene">
+    <div className="pad left">
+      <button className="btn" onClick={()=>this.virtualButtonPressed(38)}>UP</button>
+      <button className="btn" onClick={()=>this.virtualButtonPressed(37)}>LEFT</button>
+    </div>
+    <div className="pad center">
     <div className="board" style={{width:`${boradSize}px`, height:`${boradSize}px`}}>
       
       <Snake tailSize={tailSize}snakeBody={this.state.snakeBody}/>
       <Apple tailSize={tailSize} applePosition={this.state.applePosition}/>
+    </div>
+    </div>
+    <div className="pad right">
+      <button className="btn" onClick={()=>this.virtualButtonPressed(39)}>RIGHT</button>
+      <button className="btn" onClick={()=>this.virtualButtonPressed(40)}>DOWN</button>
+    </div>
     </div>
   )
 }}
