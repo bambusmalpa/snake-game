@@ -82,22 +82,37 @@ class Game extends React.Component{
     }
     
   }
+  checkSelfCollision=()=>{
+    let snakeHead=this.state.snakeBody[this.state.snakeBody.length-1];
+    
+  }
   checkAppleColission=()=>{
     
     let snakeHead=this.state.snakeBody[this.state.snakeBody.length-1]
  
     if(snakeHead[0]===this.state.applePosition[0]&&snakeHead[1]===this.state.applePosition[1]){
-      let newTail=[this.state.applePosition]
-      console.log(this)
+      this.eatApple()
       
     }
   }
+  eatApple=()=>{
+    let newTail=[this.state.applePosition]
+    let body=[...this.state.snakeBody]
+    body.unshift(newTail)
+      console.log(body)
+      this.setState({
+        snakeBody:body,
+        applePosition:randomPosition()
+      })
+
+
+  } 
 
   
  
 
   buttonPressed=(e)=>{
-    console.log(e.keyCode)
+   
     switch (e.keyCode){
       case 38:
         this.setState({
